@@ -1,3 +1,5 @@
+# receber as informações 
+
 print("\n\n===================================\n")
 print("<<<<<<<< CADASTRO DE PRODUTO >>>>>>>>>>")
 print("\n\n===================================\n")
