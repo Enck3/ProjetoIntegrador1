@@ -1,11 +1,11 @@
+import oracledb as cx_Oracle
 
-print("\n\n===================================\n")
-print("<<<<<<<< CADASTRO DE PRODUTO >>>>>>>>>>")
-print("\n\n===================================\n")
+username = 'BD150224531'
+password = 'Cbfhy1'
+hostname = '172.16.12.14'
+port = '1521'
 
-# INPUT DE INFORMAÇÕES
-
-
+cod_prod = int(input("CÓDIGO: "))
 Nome_Prod = input("NOME: ")                  # receber o nome do produto
 Desc_Prod = input("DESCRIÇÃO: ")             #receber a descrição do produto
 CP = float(input("CUSTO DE AQUISIÇÃO: "))    # receber custo do produto em reais
@@ -13,8 +13,9 @@ CF = float(input("CUSTO FIXO: "))            # receber custo fixo em porcentagem
 CV = float(input("COMISSÃO DE VENDAS: "))    # receber comissao de venda em porcentagem
 IV = float(input("IMPOSTO (SOBRE VENDA): ")) # receber imposto em porcentagem
 ML = float(input("MARGEM DE LUCRO: "))       # receber a margem de lucro em porcentagem
-
-# CÁLCULOS NECESSÁRIOS
+Nome_Autor = input("NOME DO AUTOR: ")
+editora = input("EDITORA: ")
+genero = input("GÊNERO: ")
 
 PV = CP / (1 - ((CF + CV + IV + ML)/100))        # cálculo do preço de venda
 Perc_CP = (100*CP)/PV                            # cálculo percentual do custo de aquisição
@@ -28,9 +29,6 @@ Perc_Outros_Custos = (100*Outros_Custos)/PV      #calculo do percental de outros
 Rent = Rec_Bruta - Outros_Custos                 #calculo do valor de rentabilidade
 Perc_Rent = Perc_Rec_Bruta - Perc_Outros_Custos  # calculp do percentual de rentabilidade
 
-
-# DEVOLUÇÃO DAS INFORMAÇÕES
-
 print("\n\n==============================================\n")
 print("PREÇO DE VENDA:     ", format(PV, "5.2f"), "      100%")
 print("CUSTO DE AQUISIÇÃO: ", format(CP, "5.2f"), "      ", Perc_CP, "%")
@@ -42,4 +40,42 @@ print("OUTROS CUSTOS:      ", format(Outros_Custos, "5.2f"), "      ", Perc_Outr
 print("RENTABILIDADE:      ", format(Rent, "5.2f"), "      ", Perc_Rent, "%")
 print("\n\n==============================================\n")
 
+try:
+    conn = cx_Oracle.connect(user=username, password=password, host = hostname, port=port)
+    print("Conexão estabelecida com sucesso.")
 
+    cur = conn.cursor()
+    
+    cur.execute("Insert into ADMIN.PRODUTOS (IDPRODUTO,NOMEPRODUTO,DESCRICAOPRODUTO,CUSTOPRODUTO,CUSTOADIMINISTRATIVO,COMISSAO,IMPOSTOS,RENTABILIDADE,PRECOVENDA,NOMEAUTOR,EDITORA,GENERO) VALUES (:1, :2, :3, :4, :5, :6, :7, :8, :9, :10, :11, :12)",
+                [(cod_prod), (Nome_Prod), (Desc_Prod), (CP), (CF), (CV), (IV), (ML), (PV), (Nome_Autor), (editora), (genero)])
+    
+    
+
+    conn.commit()
+    print(f"nome produto {nome_produto} inserido com sucesso.")
+    conn.commit()
+    print(f"descrição produto {descricao_produto} inserido com sucesso.")
+    conn.commit()
+    print(f"custo produto {custo_produto} inserido com sucesso.")
+    conn.commit()
+    print(f"custo administrativo {custo_adm} inserido com sucesso.")
+    conn.commit()
+    print(f"comissao {comissao} inserido com sucesso.")
+    conn.commit()
+    print(f"impostos {Impostos} inserido com sucesso.")
+    conn.commit()
+    print(f"rentabilidade {Rentabilidade} inserido com sucesso.")
+    conn.commit()
+    print(f"nome autor {nome_autor} inserido com sucesso.")
+    conn.commit()
+    print(f"editora {editora} inserido com sucesso.")
+    conn.commit()
+    print(f"genero {genero} inserido com sucesso.")
+    
+    
+except cx_Oracle.DatabaseError as e:
+    print(f"Erro ao conectar ao Oracle DB: {e}")
+finally:
+    if 'conn' in locals():
+        conn.close()
+        print("Conexão fechada.")
