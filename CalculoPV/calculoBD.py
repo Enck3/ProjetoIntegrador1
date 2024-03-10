@@ -52,25 +52,31 @@ try:
     
 
     conn.commit()
-    print(f"nome produto {nome_produto} inserido com sucesso.")
+    print(f"codigo produto {cod_prod} inserido com sucesso.")
     conn.commit()
-    print(f"descrição produto {descricao_produto} inserido com sucesso.")
+    print(f"nome produto {Nome_Prod} inserido com sucesso.")
     conn.commit()
-    print(f"custo produto {custo_produto} inserido com sucesso.")
+    print(f"descrição produto {Desc_Prod} inserido com sucesso.")
     conn.commit()
-    print(f"custo administrativo {custo_adm} inserido com sucesso.")
+    print(f"custo produto {CP} inserido com sucesso.")
     conn.commit()
-    print(f"comissao {comissao} inserido com sucesso.")
+    print(f"custo administrativo {CP} inserido com sucesso.")
     conn.commit()
-    print(f"impostos {Impostos} inserido com sucesso.")
+    print(f"comissao {CV} inserido com sucesso.")
     conn.commit()
-    print(f"rentabilidade {Rentabilidade} inserido com sucesso.")
+    print(f"impostos {IV} inserido com sucesso.")
     conn.commit()
-    print(f"nome autor {nome_autor} inserido com sucesso.")
+    print(f"rentabilidade {ML} inserido com sucesso.")
+    conn.commit()
+    print(f"preco de venda {PV} inserido com sucesso.")
+    conn.commit()
+    print(f"nome autor {Nome_Autor} inserido com sucesso.")
     conn.commit()
     print(f"editora {editora} inserido com sucesso.")
     conn.commit()
     print(f"genero {genero} inserido com sucesso.")
+    
+    
     
     
 except cx_Oracle.DatabaseError as e:
